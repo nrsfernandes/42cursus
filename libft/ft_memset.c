@@ -23,7 +23,7 @@ void	*ft_memset(void *b, int c, size_t len)
 		*a++ = (char)c;
 		len--;
 	}
-	return (b);
+	//	return (b); -> void function, no return; 
 }
 /*
 int main()

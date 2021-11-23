@@ -1,38 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrafael- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/11/02 09:00:14 by nrafael-          #+#    #+#             */
-/*   Updated: 2021/11/22 16:39:40 by nrafael-         ###   ########.fr       */
+/*   Created: 2021/10/21 17:22:45 by nrafael-          #+#    #+#             */
+/*   Updated: 2021/11/22 17:49:50 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+t_list	*ft_lstlast(t_list *lst)
 {
-	char	*str;
-	size_t	i;
-	size_t	j;
-
-	str = (char *)malloc(sizeof(*s1) * (ft_strlen(s1) + ft_strlen(s2) + 1));
-	if (!str)
+	if (!lst)
 		return (NULL);
-	i = 0;
-	j = 0;
-	while (s1[i])
+	while (lst->next)
 	{
-		str[j++] = s1[i];
-		i++;
+		lst = lst->next;
 	}
-	i = 0;
-	while (s2[i])
-	{
-		str[j++] = s2[i];
-		i++;
-	}
-	str[j] = 0;
-	return (str);
+	return (lst);
 }

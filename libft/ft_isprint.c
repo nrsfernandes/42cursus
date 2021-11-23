@@ -6,14 +6,17 @@
 /*   By: nrafael- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 17:18:06 by nrafael-          #+#    #+#             */
-/*   Updated: 2021/10/21 17:18:10 by nrafael-         ###   ########.fr       */
+/*   Updated: 2021/11/22 16:18:42 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
 int	ft_isprint(int c)
 {
 	if (c >= ' ' && c <= '~')
 		return (1);
 	else
+	{
 		return (0);
+	}
 }

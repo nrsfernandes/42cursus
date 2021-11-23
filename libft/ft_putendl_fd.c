@@ -1,19 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tolowe.c                                        :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrafael- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/21 18:44:47 by nrafael-          #+#    #+#             */
-/*   Updated: 2021/10/21 18:45:37 by nrafael-         ###   ########.fr       */
+/*   Created: 2021/10/26 12:19:57 by nrafael-          #+#    #+#             */
+/*   Updated: 2021/11/22 15:52:15 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int	ft_toupper(int c)
+int	ft_putendl_fd(char *s, int fd)
 {
-	if (c > 'A' && c < 'Z')
-		return (c + 32);
-	else
-		return (c);
+	int	cnt;
+
+	if (!s)
+		return (0);
+	cnt = 0;
+	cnt = cnt + ft_putstr_fd(s, fd);
+	cnt = cnt + ft_putchar_fd('\n', fd);
+	return (cnt);
 }

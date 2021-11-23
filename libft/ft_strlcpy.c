@@ -6,37 +6,27 @@
 /*   By: nrafael- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 18:23:27 by nrafael-          #+#    #+#             */
-/*   Updated: 2021/10/21 18:41:26 by nrafael-         ###   ########.fr       */
+/*   Updated: 2021/11/22 17:04:19 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
 
-char	*ft_strlcpy(char *dst, const char *src, size_t size)
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-	char	*final;
-	size_t	total;
-	size_t	original;
+	unsigned int	count;
+	unsigned int	i;
 
-	original = size;
-	total = ft_strlen(dst) + ft_strlen(src);
-	final = dst;
-	while (*src != 0 && size > 1)
+	count = 0;
+	while (src[count] != '\0')
+		++count;
+	i = 0;
+	if (size < 1)
+		return (count);
+	while (src[i] != '\0' && i < (size - 1))
 	{
-		*dst++ = *src++;
-		size --;
+		dst[i] = src[i];
+		++i;
 	}
-	*dst = 0;
-	return (final);
+	dst[i] = '\0';
+	return (count);
 }
-/*
-int main()
-{
-   const char src[50] = "Pedro é bixa";
-   char dest[50];
-
-   strcpy(dest,"Heloooo!!");
-   printf("Before memcpy dest = %s\n", dest);
-   ft_strlcpy(dest, src, 3*//*strlen(src)+1*//*);
-   // strlcpy(dest, src, strlen(src)+1);
-   printf("After memcpy dest = %s\n", dest);
-}*/

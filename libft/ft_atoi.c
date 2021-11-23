@@ -6,11 +6,11 @@
 /*   By: nrafael- <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/21 19:34:12 by nrafael-          #+#    #+#             */
-/*   Updated: 2021/10/21 19:40:47 by nrafael-         ###   ########.fr       */
+/*   Updated: 2021/11/22 16:16:25 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <stdbool.h>
 #include "libft.h"
+
 static int	isspace(char c)
 {
 	if (c == '\t' || c == '\n' || c == '\r')
@@ -21,10 +21,10 @@ static int	isspace(char c)
 		return (0);
 }
 
-int			ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
-	int res;
-	int negative;
+	int	res;
+	int	negative;
 
 	negative = 1;
 	res = 0;

@@ -1,16 +1,57 @@
-all: main
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: nrafael- <contact@nrsfernandes.pt>         +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/11/23 14:49:43 by nrafael-          #+#    #+#              #
+#    Updated: 2022/11/23 14:49:43 by nrafael-         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-CC = clang
-override CFLAGS += -g -Wno-everything -pthread -lm
+NAME			= libftprintf.a
 
-SRCS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.c' -print)
-HEADERS = $(shell find . -name '.ccls-cache' -type d -prune -o -type f -name '*.h' -print)
+INCLUDE 		= ./include
+SRC				= ./src
 
-main: $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) $(SRCS) -o "$@"
+CFLAGS			= -Wall -Wextra -Werror -g -I./include
+CC				= gcc
+FLAGLIB			= -rcs
+RM				= /bin/rm -f
 
-main-debug: $(SRCS) $(HEADERS)
-	$(CC) $(CFLAGS) -O0 $(SRCS) -o "$@"
+LIBFT_DIR		= ./libft
+LIBFT			= ./libft/libft.a
+
+FT_PRINTF		= ft_printf_utils.c ft_putpointer.c puthex.c ft_printf.c 
+OBJECTS			= $(FT_PRINTF:.c=.o)
+
+all:				$(NAME)
+
+all: $(NAME)
+
+$(NAME): $(LIBFT) $(OBJECTS)
+	@echo "Linking $(NAME)"
+	@cp $(LIBFT) $(NAME)
+	@ar $(FLAGLIB) $(NAME) $(OBJECTS)
+	@ranlib $(NAME)
+
+$(LIBFT): $(LIBFT_DIR)
+	@echo "Compiling libft"
+	@$(MAKE) -C $(LIBFT_DIR)
+
+%.o: $(SRC)/%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@echo "Compiling $<"
 
 clean:
-	rm -f main main-debug
+	@$(MAKE) clean -C $(LIBFT_DIR)
+	@$(RM) $(OBJECTS)
+
+fclean:		clean
+			@$(MAKE) fclean -C $(LIBFT_DIR)
+			@$(RM) $(NAME)
+
+re: fclean all
+
+.PHONY: all re clean fclean

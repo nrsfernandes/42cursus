@@ -5,59 +5,48 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrafael- <contact@nrsfernandes.pt>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 13:40:56 by nrafael-          #+#    #+#             */
-/*   Updated: 2022/11/23 13:40:58 by nrafael-         ###   ########.fr       */
+/*   Created: 2022/11/23 14:49:28 by nrafael-          #+#    #+#             */
+/*   Updated: 2022/11/23 14:49:28 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include "libft.h"
-#include <stdlib.h>
+#include "../include/ftprintf.h"
 
-void	ft_putstr(char *str)
+int	ft_putchar(char c)
 {
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
+	return(write (1, &c, 1));
 }
 
-int	ft_printstr(char *str)
+int	ft_putstr(char *str)
 {
-	int	i;
+	int	len;
 
-	i = 0;
-	if (str == NULL)
+	if (!str)
 	{
-		ft_putstr("(null)");
-		return (6);
+		return(write (1, "(null)", 6));
 	}
-	while (str[i])
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-	return (i);
+	len = ft_strlen(str);
+	return (write (1, str, len));
 }
 
-int	ft_printnbr(int n)
+int	ft_putnbr(int nbr)
 {
+	char	*str;
 	int		len;
-	char	*num;
 
-	len = 0;
-	num = ft_itoa(n);
-	len = ft_printstr(num);
-	free(num);
+	str = ft_itoa(nbr);
+	len = ft_putstr(str);
+	free(str);
 	return (len);
 }
 
-int	ft_printpercent(void)
+int	putnbr_u(unsigned int nbr)
 {
-	write(1, "%", 1);
-	return (1);
+	char	*str;
+	int		len;
+
+	str = ft_utoa(nbr);
+	len = ft_putstr(str);
+	free(str);
+	return (len);
 }

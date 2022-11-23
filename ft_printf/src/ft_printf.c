@@ -5,61 +5,59 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: nrafael- <contact@nrsfernandes.pt>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/23 13:28:01 by nrafael-          #+#    #+#             */
-/*   Updated: 2022/11/23 13:41:01 by nrafael-         ###   ########.fr       */
+/*   Created: 2022/11/23 14:49:32 by nrafael-          #+#    #+#             */
+/*   Updated: 2022/11/23 14:49:32 by nrafael-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "../include/ftprintf.h"
 
-int	ft_printchar(int c)
+int	ft_printf(const char *format, ...)
 {
-	write(1, &c, 1);
-	return (1);
-}
-
-int	ft_formats(va_list args, const char format)
-{
-	int	print_length;
-
-	print_length = 0;
-	if (format == 'c')
-		print_length += ft_printchar(va_arg(args, int));
-	else if (format == 's')
-		print_length += ft_printstr(va_arg(args, char *));
-	else if (format == 'p')
-		print_length += ft_print_ptr(va_arg(args, unsigned long long));
-	else if (format == 'd' || format == 'i')
-		print_length += ft_printnbr(va_arg(args, int));
-	else if (format == 'u')
-		print_length += ft_print_unsigned(va_arg(args, unsigned int));
-	else if (format == 'x' || format == 'X')
-		print_length += ft_print_hex(va_arg(args, unsigned int), format);
-	else if (format == '%')
-		print_length += ft_printpercent();
-	return (print_length);
-}
-
-int	ft_printf(const char *str, ...)
-{
+	va_list	ap;
 	int		i;
-	va_list	args;
-	int		print_length;
+	int		ret;
 
 	i = 0;
-	print_length = 0;
-	va_start(args, str);
-	while (str[i])
+	ret = 0;
+	va_start(ap, format);
+	while (format[i])
 	{
-		if (str[i] == '%')
+		if (format[i] == '%' && ft_strchr("cspdiuxX%", format[i + 1]))
 		{
-			print_length += ft_formats(args, str[i + 1]);
+			ret += ft_printf_arg(format, i, ap);
 			i++;
 		}
 		else
-			print_length += ft_printchar(str[i]);
+			ret += ft_putchar(format[i]);
 		i++;
 	}
-	va_end(args);
-	return (print_length);
+	va_end(ap);
+	return (ret);
+}
+
+int	ft_printf_arg(const char *fmt, int i, va_list ap)
+{
+	if (fmt[i + 1] == '%')
+		return (ft_putchar(fmt[i + 1]));
+	else if (fmt[i + 1] == 'c')
+		return (ft_putchar(va_arg(ap, int)));
+	else if (fmt[i + 1] == 's')
+		return (ft_putstr(va_arg(ap, char *)));
+	else if (fmt[i + 1] == 'd' || fmt[i + 1] == 'i')
+		return (ft_putnbr(va_arg(ap, int)));
+	else if (fmt[i + 1] == 'u')
+		return (putnbr_u(va_arg(ap, unsigned int)));
+	else if (fmt[i + 1] == 'x' || fmt[i + 1] == 'X')
+	{
+		if (fmt[i + 1] == 'X')
+			return (put_hex(va_arg(ap, unsigned int), "0123456789ABCDEF"));
+		else
+			return (put_hex(va_arg(ap, unsigned int), "0123456789abcdef"));
+	}
+	else if (fmt[i + 1] == 'p')
+		return (ft_putstr("0x") + put_pointer(va_arg(ap, void *), \
+				"0123456789abcdef"));
+	else
+		return (0);
 }
